@@ -13,7 +13,17 @@
 #include <string>
 #include <vector>
 
+#ifdef __has_include
+#if __has_include(<jsoncpp/json/json.h>)
 #include <jsoncpp/json/json.h>
+#elif __has_include(<json/json.h>)
+#include <json/json.h>
+#else
+#error "Missing json.h"
+#endif
+#else
+#include <jsoncpp/json/json.h>
+#endif
 
 	/* === General types === */
 	struct getinfo_t{
