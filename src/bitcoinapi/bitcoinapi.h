@@ -31,7 +31,7 @@ public:
     /* === Auxiliary functions === */
     Json::Value sendcommand(const std::string& command, const Json::Value& params);
 
-    std::string IntegerToString(int num);    
+    std::string IntegerToString(int num);
     std::string RoundDouble(double num);
 
 
@@ -150,6 +150,8 @@ public:
     std::vector<std::string> getrawmempool();
     std::string getrawchangeaddress();
 
+    /* === OP_GROUP calls === */
+    grouplist_t gettokenlist();
 };
 
 

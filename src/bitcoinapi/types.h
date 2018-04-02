@@ -10,6 +10,7 @@
 #ifndef BITCOIN_API_TYPES_H
 #define BITCOIN_API_TYPES_H
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -290,6 +291,10 @@
 	struct txsinceblock_t{
 		std::vector<transactioninfo_t> transactions;
 		std::string lastblock;
+	};
+
+	struct grouplist_t{
+		std::map<std::string, std::uint64_t> groups;
 	};
 
 #endif

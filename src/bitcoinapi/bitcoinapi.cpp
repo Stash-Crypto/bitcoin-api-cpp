@@ -10,6 +10,7 @@
 
 #include "bitcoinapi.h"
 
+#include <iostream>
 #include <string>
 #include <stdexcept>
 #include <cmath>
@@ -1103,12 +1104,12 @@ decodescript_t BitcoinAPI::decodescript(const std::string& hexString) {
 	ret.reqSigs = result["reqSigs"].asInt();
 	ret.type = result["type"].asString();
 	ret.p2sh = result["p2sh"].asString();
-	
+
 	for (ValueIterator it = result["addresses"].begin(); it != result["addresses"].end(); it++) {
 		Value val = (*it);
 		ret.addresses.push_back(val.asString());
 	}
-	
+
 	return ret;
 }
 
@@ -1351,6 +1352,31 @@ utxosetinfo_t BitcoinAPI::gettxoutsetinfo() {
 	ret.bytes_serialized = result["bytes_serialized"].asInt();
 	ret.hash_serialized = result["hash_serialized"].asString();
 	ret.total_amount = result["total_amount"].asDouble();
+
+	return ret;
+}
+
+grouplist_t BitcoinAPI::gettokenlist() {
+	string command = "token";
+	Value params, result;
+	grouplist_t ret;
+	auto& balanceMap = ret.groups;
+
+	params.append("balance");
+	result = sendcommand(command, params);
+
+	if (false == result.isObject()) {
+
+		return ret;
+	}
+
+	const auto members = result.getMemberNames();
+
+	for (const auto& member : members) {
+		const auto& value = result[member];
+		const auto outputType = Json::uintValue;
+		balanceMap[member] = value.asUInt64();
+	}
 
 	return ret;
 }
