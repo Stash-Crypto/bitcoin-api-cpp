@@ -1380,3 +1380,45 @@ grouplist_t BitcoinAPI::gettokenlist() {
 
 	return ret;
 }
+
+tokentxsinceblock_t BitcoinAPI::tokenlistsinceblock(const std::string& group, const string& blockhash, int target_confirmations) {
+	string command = "token";
+	Value params, result;
+	tokentxsinceblock_t ret;
+
+	params.append("listsinceblock");
+	params.append(group);
+	params.append(blockhash);
+//	params.append(target_confirmations);
+	result = sendcommand(command, params);
+
+	for(ValueIterator it = result["transactions"].begin(); it != result["transactions"].end(); it++){
+		Value val = (*it);
+		tokentransactioninfo_t tmp;
+
+		tmp.account = val["account"].asString();
+		tmp.address = val["address"].asString();
+		tmp.category = val["category"].asString();
+		tmp.amount = val["amount"].asInt();
+		tmp.confirmations = val["confirmations"].asInt();
+		tmp.blockhash = val["blockhash"].asString();
+		tmp.blockindex = val["blockindex"].asInt();
+		tmp.blocktime = val["blocktime"].asInt();
+		tmp.txid = val["txid"].asString();
+
+		for (ValueIterator it2 = val["walletconflicts"].begin();
+				it2 != val["walletconflicts"].end(); it2++) {
+			tmp.walletconflicts.push_back((*it2).asString());
+		}
+
+		tmp.time = val["time"].asInt();
+		tmp.timereceived = val["timereceived"].asInt();
+		tmp.vout = val["vout"].asInt();
+
+		ret.transactions.push_back(tmp);
+	}
+
+	ret.lastblock = result["lastblock"].asString();
+
+	return ret;
+}

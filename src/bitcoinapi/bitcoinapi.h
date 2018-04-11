@@ -152,6 +152,7 @@ public:
 
     /* === OP_GROUP calls === */
     grouplist_t gettokenlist();
+    tokentxsinceblock_t tokenlistsinceblock(const std::string& group, const std::string& blockhash = "", int target_confirmations = 1);
 };
 
 

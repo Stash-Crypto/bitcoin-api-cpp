@@ -293,6 +293,30 @@
 		std::string lastblock;
 	};
 
+	struct tokenaccountinfo_t{
+		std::string account;
+		int amount;
+		int confirmations;
+	};
+
+	struct tokentransactioninfo_t: tokenaccountinfo_t{
+		std::string address;
+		std::string category;
+		std::string blockhash;
+		int blockindex;
+		int blocktime;
+		std::string txid;
+		std::vector<std::string> walletconflicts;
+		int time;
+		int timereceived;
+		int vout;
+	};
+
+	struct tokentxsinceblock_t{
+		std::vector<tokentransactioninfo_t> transactions;
+		std::string lastblock;
+	};
+
 	struct grouplist_t{
 		std::map<std::string, std::uint64_t> groups;
 	};
