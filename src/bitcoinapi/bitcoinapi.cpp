@@ -541,6 +541,18 @@ gettransaction_t BitcoinAPI::gettransaction(const string& tx, bool watch) {
 		tmp.vout = val["vout"].asInt();
 		tmp.fee = val["fee"].asDouble();
 
+		if (val.isMember("group")) {
+			tmp.group = val["group"].asString();
+		}
+
+		if (val.isMember("groupamount")) {
+			tmp.groupamount = val["groupamount"].asUInt64();
+		}
+
+		if (val.isMember("satoshis")) {
+			tmp.satoshis = val["satoshis"].asUInt64();
+		}
+
 		ret.details.push_back(tmp);
 	}
 
@@ -1399,7 +1411,7 @@ tokentxsinceblock_t BitcoinAPI::tokenlistsinceblock(const std::string& group, co
 		tmp.account = val["account"].asString();
 		tmp.address = val["address"].asString();
 		tmp.category = val["category"].asString();
-		tmp.amount = val["amount"].asInt();
+		tmp.amount = val["amount"].asInt64();
 		tmp.confirmations = val["confirmations"].asInt();
 		tmp.blockhash = val["blockhash"].asString();
 		tmp.blockindex = val["blockindex"].asInt();

@@ -10,6 +10,7 @@
 #ifndef BITCOIN_API_TYPES_H
 #define BITCOIN_API_TYPES_H
 
+#include <cstdint>
 #include <map>
 #include <string>
 #include <vector>
@@ -126,6 +127,9 @@
 		std::string account;
 		std::string address;
 		std::string category;
+		std::string group;
+		std::uint64_t groupamount;
+		std::uint64_t satoshis;
 		double amount;
 		int vout;
 		double fee;
